@@ -1,0 +1,23 @@
+{
+    "componentID": "1",
+    "name": "Inteval Signal",
+    "isSignal": "true",
+    "inPorts": [],
+    "outPorts": [{
+        "direction": "out",
+        "text": "signal",
+        "outputType": "signal"
+    }],
+    "iconId": "stopwatch.svg",
+    "properties": [{
+        "name": "interval",
+        "userEditable": "true",
+        "inputType": "numeric",
+        "restrictions": {
+            "minimum": "1",
+            "maximum": "2678400"
+        },
+        "value": "60",
+        "description": "Definition for the timer based signal. This will, on predefined intervals, provide start a workflow. It has only an output port which should be used to initiate a workflow. The only user defined property is an interval provided in seconds."
+    }]
+}
