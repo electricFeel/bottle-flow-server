@@ -1,0 +1,4 @@
+{
+    "DisplayName": "Basic Signals",
+    "SVGIcon": "signal.svg"
+}
