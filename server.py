@@ -12,14 +12,21 @@ def loadEverything():
     for name in os.listdir("palettes"):
             if(os.path.isdir):
                 #add the pallet
-                pallets[name] = {}
+                pallets[name] = {"components": {}}
+                pallete_json = json.loads(open(os.path.abspath(os.path.join("palettes", name, "_config.pc"))).read())
+                pallets[name]['SVGIcon'] = get_icon(pallete_json['SVGIcon'])
+                pallets[name]['DisplayName'] = pallete_json['DisplayName']
+
                 for component_file in os.listdir(os.path.join("palettes", name)):
                     #fo = open(os.path.join(base_path, "pallets", name, component_file))
                     #print os.path.exists(os.path.join("pallets", name, component_file))
+                    if not component_file.endswith(".json"):
+                        continue
+
                     json_data = open(os.path.abspath(os.path.join("palettes", name, component_file))).read()
                     c = json.loads(json_data)
                     components[c["componentID"]] = c
-                    pallets[name][c["componentID"]] = c
+                    pallets[name]["components"][c["componentID"]] = c
  
 @app.hook('after_request')
 def enable_cors():
@@ -40,10 +47,13 @@ def get_icon(name):
 def get_component(id):
     return components[id]
 
-@app.route('/pallet/<name>', method=['OPTIONS', 'GET'])
-def get_pallet(name):
+@app.route('/palette/<name>', method=['OPTIONS', 'GET'])
+def get_palette(name):
     return pallets[name]
 
+@app.route('/palette', method=['OPTIONS', 'GET'])
+def get_palettes():
+    return json.dumps(pallets)
  
 if __name__ == '__main__':
     #load all of the pallets and then all of the components
